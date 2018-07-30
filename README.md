@@ -23,5 +23,5 @@ python Experiment.py
 Here is the current list of features I would like to add:
 - Store trained learners in a database.
 - More intuitiv unified GUI for training as well as manual and automated testing.
-- Other games, e.g. 4 [Connect 4](https://en.wikipedia.org/wiki/Connect_Four).
+- Other games, e.g. [Connect 4](https://en.wikipedia.org/wiki/Connect_Four).
 - Improve RL.
