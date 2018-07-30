@@ -79,7 +79,7 @@ class TestLearner(unittest.TestCase):
         for field in fields:
             self.tictactoe.play(*field,self.learner)
 
-        self.assertEquals(fields, self.tictactoe.is_winner(self.learner))
+        self.assertEqual(fields, self.tictactoe.is_winner(self.learner))
         self.learner.learn(self.tictactoe, 100, self.learner)
         print(self.learner.rewards)
 
@@ -90,7 +90,7 @@ class TestLearner(unittest.TestCase):
         print(self.tictactoe.board)
 
         self.assertFalse(self.tictactoe.is_winner(self.other_player))
-        self.assertEquals(fields, self.tictactoe.is_winner(self.learner))
+        self.assertEqual(fields, self.tictactoe.is_winner(self.learner))
 
     def test_learn_single_starting(self):
         self.learner = Learner()
@@ -108,7 +108,7 @@ class TestLearner(unittest.TestCase):
                 pass
             self.learner.look(self.tictactoe)
 
-        self.assertEquals(fields, self.tictactoe.is_winner(self.learner))
+        self.assertEqual(fields, self.tictactoe.is_winner(self.learner))
         self.learner.learn(self.tictactoe, 100, self.learner)
         print(self.learner.rewards)
 
@@ -121,7 +121,7 @@ class TestLearner(unittest.TestCase):
         print(self.tictactoe.board)
 
         self.assertFalse(self.tictactoe.is_winner(self.other_player))
-        self.assertEquals(fields, self.tictactoe.is_winner(self.learner))
+        self.assertEqual(fields, self.tictactoe.is_winner(self.learner))
 
     def test_learn_single_otherstarting(self):
         self.learner = Learner()
@@ -138,7 +138,7 @@ class TestLearner(unittest.TestCase):
             except(IndexError):
                 pass
 
-        self.assertEquals(fields, self.tictactoe.is_winner(self.learner))
+        self.assertEqual(fields, self.tictactoe.is_winner(self.learner))
         self.learner.learn(self.tictactoe, 100, self.learner)
         print(self.learner.rewards)
 
@@ -151,7 +151,7 @@ class TestLearner(unittest.TestCase):
         print(self.tictactoe.board)
 
         self.assertFalse(self.tictactoe.is_winner(self.other_player))
-        self.assertEquals(fields, self.tictactoe.is_winner(self.learner))
+        self.assertEqual(fields, self.tictactoe.is_winner(self.learner))
 
 if __name__ == '__main__':
     unittest.main()
