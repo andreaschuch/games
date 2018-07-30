@@ -3,6 +3,7 @@ In this project, I'm implementing games such as TicTacToe in python. I have work
 - GUI-based interaction allowing users to play the game
 - automizated players allowing users to play against a machine player 
 - training and evaluation of machine-learning based automized players.
+
 For more details regarding the current state, please generate the doxygen documentation (see below).
 
 # How to setup this project:
