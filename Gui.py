@@ -94,7 +94,7 @@ class KtinterGui(Gui):
     def run(self):
         self.root.mainloop()
 
-    def game_over(self, winner):
+    def game_over(self, winner=None):
         for row in range(self.game.board_size()):
             for column in range(self.game.board_size()):
                 self.buttons[row][column].configure(state=DISABLED)
@@ -167,7 +167,7 @@ class CommandlineGui(Gui):
 if __name__ == '__main__':
     game = TicTacToe()
     player = Player()
-    gui = CommandlineGui(game)
+    gui = KtinterGui(game)
     gui.start()
     move1 = (1,1)
     gui.game.play(*move1, player)
