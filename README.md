@@ -14,6 +14,6 @@ For more details regarding the current state, please [generate the doxygen docum
 # How to run this project
 python Experiment.py
 
-# How to generate the documentation
+# how to generate the documentation
 1. doxygen Doxyfile
 2. Open file index.html in folder html.
