@@ -4,7 +4,7 @@ The goal of this project is to implement games (such as [TicTacToe](https://en.w
 2. automization of players allowing users to play against a machine player 
 3. training and evaluation of machine-learning-based players.
 
-For more details regarding the current state, please generate the doxygen [documentation] (https://github.com/andreaschuch/games/blob/master/README.md#how-to-generate-the-documentation)
+For more details regarding the current state, please [generate the doxygen documentation](https://github.com/andreaschuch/games/blob/master/README.md#how-to-generate-the-documentation)
 
 # How to setup this project
 1. git clone https://github.com/andreaschuch/games
