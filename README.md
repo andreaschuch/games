@@ -4,7 +4,7 @@ The goal of this project is to implement games (such as [TicTacToe](https://en.w
 2. automization of players allowing users to play against a machine player 
 3. training and evaluation of machine-learning-based players.
 
-For more details regarding the current state, please [generate the doxygen documentation] (README.md#how-to-generate-the-documentation).
+For more details regarding the current state, please [generate the doxygen documentation] (README.md#doc).
 
 # How to setup this project
 1. git clone https://github.com/andreaschuch/games
@@ -14,6 +14,6 @@ For more details regarding the current state, please [generate the doxygen docum
 # How to run this project
 python Experiment.py
 
-# how to generate the documentation
+# How to generate the documentation <a name="doc"></a>
 1. doxygen Doxyfile
 2. Open file index.html in folder html.
