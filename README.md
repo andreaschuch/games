@@ -19,8 +19,9 @@ python Experiment.py
 python -m unittest tests/<TestFile.py>
 
 # How to generate the documentation
-1. doxygen Doxyfile
-2. Open file index.html in folder html.
+1. Install doxygen, see also (#how-to-generate-the-documentation)
+2. doxygen Doxyfile
+3. Open file index.html in folder html.
 
 # TODO's
 Here is the current list of features I would like to add:
