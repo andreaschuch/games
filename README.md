@@ -19,7 +19,7 @@ python Experiment.py
 python -m unittest tests/<TestFile.py>
 
 # How to generate the documentation
-1. Install doxygen, see also (#how-to-generate-the-documentation)
+1. Install doxygen, see also [How to setup this project](#how-to-setup-this-project)
 2. doxygen Doxyfile
 3. Open file index.html in folder html.
 
