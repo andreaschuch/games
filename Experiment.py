@@ -77,13 +77,12 @@ class Experiment:
 
 if __name__=='__main__':
     learner = Learner('X')
-    experiment = Experiment(100000, learner, KtinterGui)
+    experiment = Experiment(500, learner, KtinterGui)
 
     trainer = RandomPlayer('O')
     tester1 = RandomPlayer('O')
     tester2 = HumanPlayer('O')
 
-    learner.random_exploration=True
     experiment.train(trainer)
     print('won=' + str(experiment.won))
     print('lost=' + str(experiment.lost))
@@ -118,7 +117,7 @@ if __name__=='__main__':
     experiment.lost=0
     experiment.draw=0
 
-    experiment.test(tester2, 2)
+    experiment.test(tester2, 1)
     print('won='+str(experiment.won))
     print('lost='+str(experiment.lost))
     print('draw='+str(experiment.draw))
