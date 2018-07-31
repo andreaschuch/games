@@ -27,7 +27,8 @@ class Learner(Player):
         if self.random_exploration:
             move = random.choice(available_moves)
         else:
-            move = max(available_moves, key=lambda move: self.get_reward(move, game.board), default=0)
+            random.shuffle(available_moves)
+            move = max(available_moves, key=lambda move: self.get_reward(move, game.board))
         return move
 
     ##
@@ -54,6 +55,7 @@ class Learner(Player):
     # (e.g. 100 if the learner is winning, -100 if the learner is loosing, 0 for a draw).
     # @param last_player The player who made the last move in the game.
     def learn(self, game, reward, last_player):
+        #print("reward="+str(reward))
         self.look(game)
         if last_player != self:
             last_player_history = self.history[last_player.name]
@@ -75,7 +77,6 @@ class Learner(Player):
                         pass
             reward = new_reward
         self.history = {}
-
     ##
     # Retrieves the reward for a particular action at the given state of the game.
     # @param action The specified action (move).
