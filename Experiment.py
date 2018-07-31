@@ -2,11 +2,12 @@ from TicTacToe import TicTacToe
 from Learner import Learner
 from Players import RandomPlayer
 from Players import HumanPlayer
-from Players  import PlayerTypes
+from Players import PlayerTypes
+from Players import DeterministicPlayer
 import matplotlib.pyplot as plt
 from Match import Match
-from Gui import CommandlineGui
-from Gui import KtinterGui
+import Gui
+import argparse
 
 
 ##
@@ -16,31 +17,59 @@ from Gui import KtinterGui
 # @author Andrea Schuch
 class Experiment:
 
-    def __init__(self, no_of_training_rounds, learner, gui):
-        self.no_of_training_rounds = no_of_training_rounds
+    def __init__(self, learner, gui):
         self.learner = learner
+        self.gui = gui
+        self.reinit()
+
+    def reinit(self):
+        self.matches = 0
         self.won = 0
         self.wonplot = []
         self.lost = 0
         self.lostplot = []
         self.draw = 0
         self.drawplot = []
-        self.matches = 0
-        self.gui=gui
 
-    def train(self, trainer):
+
+    def train(self, trainer, no_of_training_rounds=1000):
         print('----- Training:-----')
-        for X in range(experiment.no_of_training_rounds):
+        for X in range(no_of_training_rounds):
             self.run(self.learner, trainer)
             experiment.evaluate(trainer)
+        self.print_testresult()
+        self.plot_trained()
+        self.reinit()
 
-    def test(self, other_player, no_of_testrounds):
+    def plot_trained(self):
+        fig, ax = plt.subplots()
+        ax.plot(range(self.matches), experiment.wonplot, label='won')
+        ax.plot(range(self.matches), experiment.lostplot, label='lost')
+        ax.plot(range(self.matches), experiment.drawplot, label='draw')
+
+        ax.set(xlabel='number of games')
+        ax.set(ylabel='percentage of games')
+        ax.set(title='Learner Performance')
+        plt.legend()
+        plt.show(block=False)
+
+    def test(self, other_player, no_of_testrounds=None):
+        if not no_of_testrounds:
+            no_of_testrounds=100
         if (other_player.type==PlayerTypes.HUMAN):
             print('----- Manual Testing:-----')
         elif(other_player.type==PlayerTypes.MACHINE):
             print('----- Automated Testing:-----')
         for X in range(no_of_testrounds):
             self.run(self.learner, other_player)
+
+        self.print_testresult()
+        self.reinit()
+
+    def print_testresult(self):
+        print('won=' + str(experiment.won))
+        print('lost=' + str(experiment.lost))
+        print('draw=' + str(experiment.draw))
 
     def run(self, player, other_player):
         self.game = TicTacToe()
@@ -51,74 +80,57 @@ class Experiment:
         self.match.play()
 
 
-        self.matches +=1
-        if (not self.game.available_moves()):
+        self.matches = self.matches + 1
+        #print('\n')
+        if self.match.winner == self.learner:
+            self.won += 1
+            #print('won')
+        elif self.match.winner == other_player:
+            self.lost += 1
+            #print('lost')
+        else:
+            self.draw += 1
             #print('draw')
-            self.draw +=1
-        elif self.game.is_winner(self.match.current_player()):
-            #print ('winner=' + current_player.name)
-            if self.match.current_player() == player:
-                 self.won +=1
-            if self.match.current_player()==other_player:
-                 self.lost +=1
         self.wonplot.append(self.won/self.matches)
         self.drawplot.append(self.draw/self.matches)
         self.lostplot.append(self.lost/self.matches)
 
     def evaluate(self, other_player):
-        if self.game.is_winner(self.learner):
+        if self.match.winner == self.learner:
             reward = 100
-        elif self.game.is_winner(other_player):
+        elif self.match.winner == other_player:
             reward = -100
         else:
-            reward = 0
+            reward = -50
         self.learner.learn(self.game, reward, self.match.current_player())
 
 
-if __name__=='__main__':
+if __name__ == '__main__':
     learner = Learner('X')
-    experiment = Experiment(500, learner, KtinterGui)
+    other_mark = 'O'
+    experiment = Experiment(learner, Gui.KtinterGui)
 
-    trainer = RandomPlayer('O')
-    tester1 = RandomPlayer('O')
-    tester2 = HumanPlayer('O')
+    trainer = RandomPlayer(other_mark)
+    tester1 = RandomPlayer(other_mark)
+    tester2 = HumanPlayer(other_mark)
 
-    experiment.train(trainer)
-    print('won=' + str(experiment.won))
-    print('lost=' + str(experiment.lost))
-    print('draw=' + str(experiment.draw))
+    parser = argparse.ArgumentParser(description='Configures the experiment.')
+    parser.add_argument('-train','--no_of_training_rounds', type=int, default=1000,
+                        help='Number of training rounds')
+    parser.add_argument('-atest','--number_of_automated_testrounds', type=int, default=100,
+                        help='Number of testing rounds for automated evaluation')
+    parser.add_argument('-mtest','--number_of_manual_testrounds', type=int, default=1,
+                        help='Number of testing rounds for manual evaluation')
 
-    experiment.won=0
-    experiment.lost=0
-    experiment.draw=0
-    #print(experiment.learner.rewards)
-    fig, ax = plt.subplots()
-    ax.plot(range(experiment.no_of_training_rounds),experiment.wonplot, label='won')
-    ax.plot(range(experiment.no_of_training_rounds),experiment.lostplot, label='lost')
-    ax.plot(range(experiment.no_of_training_rounds),experiment.drawplot, label='draw')
+    args = parser.parse_args()
 
-    ax.set(xlabel='number of games')
-    ax.set(ylabel='percentage of games')
-    ax.set(title='Learner Performance')
-    plt.legend()
-    plt.show(block=False)
-
-    experiment.won=0
-    experiment.lost=0
-    experiment.draw=0
+    experiment.learner.random_exploration = False
+    experiment.train(trainer, args.no_of_training_rounds)
+    #print('----- Reward Values:-----')
+    #print(learner.rewards)
 
     learner.random_exploration = False
-    experiment.test(tester1, 100)
-    print('won='+str(experiment.won))
-    print('lost='+str(experiment.lost))
-    print('draw='+str(experiment.draw))
+    experiment.test(trainer, args.number_of_automated_testrounds)
 
-    experiment.won=0
-    experiment.lost=0
-    experiment.draw=0
-
-    experiment.test(tester2, 1)
-    print('won='+str(experiment.won))
-    print('lost='+str(experiment.lost))
-    print('draw='+str(experiment.draw))
+    experiment.test(tester2, args.number_of_manual_testrounds)
 
