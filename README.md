@@ -15,9 +15,13 @@ For more details regarding the current state, please setup project and [generate
 # How to run this project
 python Experiment.py
 
+# How to run the unittests
+python -m unittest tests/<TestFile.py>
+
 # How to generate the documentation
-1. doxygen Doxyfile
-2. Open file index.html in folder html.
+1. Install doxygen, see also [How to setup this project](#how-to-setup-this-project)
+2. doxygen Doxyfile
+3. Open file index.html in folder html.
 
 # TODO's
 Here is the current list of features I would like to add:
