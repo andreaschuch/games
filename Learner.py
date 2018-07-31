@@ -6,11 +6,17 @@ import random
 # A player who uses Reinforcement learning to learn from experience to improve his playing skills.
 # @author Andrea Schuch
 class Learner(Player):
-    learning_rate = 0.3
-    discount_factor = 0.1
 
-    def __init__(self, name='L'):
+    ##
+    # Constructs a machine-learning-based player.
+    # @param name The player's and mark.
+    # @param learning_rate The player's learning rate, i.g. willingness to adapt to new experiences.
+    # @param discount_factor The player's discount factor, i.e. how much the learner values rewards in the future.
+    def __init__(self, name='L', learning_rate=0.3, discount_factor=0.1):
         super().__init__(name)
+        self.learning_rate = learning_rate
+        self.discount_factor = discount_factor
+
         self.rewards = {}
         self.history = {}
         self.random_exploration = False
@@ -91,7 +97,7 @@ class Learner(Player):
     # Saves the reward for a particular action at the given state of the game.
     # (For internal use).
     # @param action The specified action (move).
-    # @param action The reward to be stored for the action.
+    # @param reward The reward to be stored for the action.
     # @param board The current state of the game.
     def set_reward(self, reward, action, board):
         state = tuple(tuple(x) for x in board)

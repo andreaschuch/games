@@ -16,12 +16,21 @@ import argparse
 # 2. against a human player.
 # @author Andrea Schuch
 class Experiment:
-
+    ##
+    # Constructs a new experiment allowing to
+    # 1. Train a machine learning-based computer player.
+    # 2. Evaluating the learner's performance in automated tests against another machine player.
+    # 3. Manually evaluating the performance by playing against it.
+    # @param learner The machine-learning-based player to be trained and tested.
+    # @param gui The Gui class to be used during manual evalutation.
     def __init__(self, learner, gui):
         self.learner = learner
         self.gui = gui
         self.reinit()
 
+    ##
+    # Re-initializes the experiment's counters.
+    # Should be called after each run() for training or testing.
     def reinit(self):
         self.matches = 0
         self.won = 0
@@ -31,7 +40,10 @@ class Experiment:
         self.draw = 0
         self.drawplot = []
 
-
+    ##
+    # Trains the learner by letting it play against another player and displays the learner's performance.
+    # @param trainer The other player used for training the learner.
+    # @param no_of_training_rounds Number of matches to be played.
     def train(self, trainer, no_of_training_rounds=1000):
         print('----- Training:-----')
         for X in range(no_of_training_rounds):
@@ -41,6 +53,8 @@ class Experiment:
         self.plot_trained()
         self.reinit()
 
+    ##
+    # Displays how the learner performed during the training.
     def plot_trained(self):
         fig, ax = plt.subplots()
         ax.plot(range(self.matches), experiment.wonplot, label='won')
@@ -53,6 +67,10 @@ class Experiment:
         plt.legend()
         plt.show(block=False)
 
+    ##
+    # Tests the learner by letting it play against another player.
+    # @param tester The other player used for testing the learner.
+    # @param no_of_testrounds Number of matches to be played. Defaults to 100.
     def test(self, other_player, no_of_testrounds=None):
         if not no_of_testrounds:
             no_of_testrounds=100
@@ -66,11 +84,15 @@ class Experiment:
         self.print_testresult()
         self.reinit()
 
+    ##
+    # Displays how the learner performed during the test.
     def print_testresult(self):
         print('won=' + str(experiment.won))
         print('lost=' + str(experiment.lost))
         print('draw=' + str(experiment.draw))
 
+    ##
+    # Runs a match and stores the result.
     def run(self, player, other_player):
         self.game = TicTacToe()
         gui = None
@@ -95,6 +117,8 @@ class Experiment:
         self.drawplot.append(self.draw/self.matches)
         self.lostplot.append(self.lost/self.matches)
 
+    # Evaluates the outcome of a match for the learner to learn.
+    # @param  other_player The other player.
     def evaluate(self, other_player):
         if self.match.winner == self.learner:
             reward = 100
@@ -121,13 +145,16 @@ if __name__ == '__main__':
                         help='Number of testing rounds for automated evaluation')
     parser.add_argument('-mtest','--number_of_manual_testrounds', type=int, default=1,
                         help='Number of testing rounds for manual evaluation')
-
+    parser.add_argument('-prewards','--print_reward_table', type=bool, default=False,
+                        help='Prints out the internal reward table of the learner after training.')
     args = parser.parse_args()
 
     experiment.learner.random_exploration = False
     experiment.train(trainer, args.no_of_training_rounds)
-    #print('----- Reward Values:-----')
-    #print(learner.rewards)
+
+    if (args.print_reward_table):
+        print('----- Reward Values:-----')
+        print(learner.rewards)
 
     learner.random_exploration = False
     experiment.test(trainer, args.number_of_automated_testrounds)

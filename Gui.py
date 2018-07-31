@@ -23,10 +23,6 @@ class Gui(ABC):
     def start(self):
         pass
 
-    @abstractmethod
-    def run(self):
-        pass
-
     ##
     # Retrieves the human player's next move, at the current state of the game, by asking the user.
     # @param game The game.
@@ -91,9 +87,6 @@ class KtinterGui(Gui):
         self.user_input = None
         return user_input
 
-    def run(self):
-        self.root.mainloop()
-
     def game_over(self, winner=None):
         for row in range(self.game.board_size()):
             for column in range(self.game.board_size()):
@@ -154,9 +147,6 @@ class CommandlineGui(Gui):
         os.system('cls')
         self.game.print_board()
         return success
-
-    def run(self):
-        pass
 
     def game_over(self, winner=None):
             if winner:
