@@ -15,6 +15,9 @@ For more details regarding the current state, please setup project and [generate
 # How to run this project
 python Experiment.py
 
+For more information about configuration options run:
+python Experiment.py --help
+
 # How to run the unittests
 python -m unittest tests/<TestFile.py>
 
