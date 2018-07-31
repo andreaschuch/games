@@ -11,7 +11,7 @@ import argparse
 
 
 ##
-# This class trains a learning machine player against another machine player and then tests the learners performance
+# Trains a learning machine player against another machine player and then tests the learners performance
 # 1. against the other machine player
 # 2. against a human player.
 # @author Andrea Schuch
