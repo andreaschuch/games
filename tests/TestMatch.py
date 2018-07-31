@@ -2,6 +2,7 @@ import unittest
 from Match import Match
 from Players import RandomPlayer
 from Players import HumanPlayer
+from Players import DeterministicPlayer
 from TicTacToe import TicTacToe
 from Gui import KtinterGui
 from Gui import CommandlineGui
@@ -137,6 +138,14 @@ class TestMatch(unittest.TestCase):
         player2 = Learner()
         game = TicTacToe()
         gui = CommandlineGui(game)
+        match = Match(gui, game, players=[player1, player2])
+        match.play()
+
+    def test_2_deterministic_players_gui(self):
+        player1 = DeterministicPlayer('D1')
+        player2 = DeterministicPlayer('D2')
+        game =  TicTacToe()
+        gui = KtinterGui(game)
         match = Match(gui, game, players=[player1, player2])
         match.play()
 

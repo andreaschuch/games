@@ -56,3 +56,18 @@ class RandomPlayer(Player):
     # @return The move chosen by the player.
     def next_move(self, game):
         return random.choice(game.available_moves())
+
+class DeterministicPlayer(Player):
+    ##
+    # Constructs a deterministic player.
+    # @param name The player's name. Used for marking the board.
+    def __init__(self,name='D'):
+        super().__init__(name, PlayerTypes.MACHINE)
+
+    ##
+    # Determines the player's next move, at the current state of the game.
+    # The deterministic player always takes the first choice of all available moves in the current state of a game.
+    # @param game The game.
+    # @return The move chosen by the player.
+    def next_move(self, game):
+        return game.available_moves()[0]
