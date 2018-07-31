@@ -8,7 +8,6 @@ from Learner import Learner
 from Players import Player
 
 
-
 ##
 # Class for playing a match of a game. The following functionalities are supported
 # 1. Playing a game manually using different graphical interfaces.
@@ -34,6 +33,7 @@ class Match:
         self.gui = gui
         self.players = players
         self.current_player_number = 0
+        self.winner = None
 
         for player in self.players:
             if type(player) == Learner:
@@ -61,6 +61,7 @@ class Match:
     # @see is_game_over() End-of-game conditions.
 
     def play(self):
+        self.winner = None
         while not self.is_game_over():
             player = self.current_player()
             if player.type == PlayerTypes.HUMAN:
@@ -80,9 +81,14 @@ class Match:
     ## Checks if the game has ended. A games is over if
     # - either of the player has won
     # - or there is a draw preventing either playing from winning.
+    # Sets winner variable to current_player(), if not a draw.
     # @return True if the game is over, and false otherwise.
     def is_game_over(self):
-        return self.game.is_winner(self.current_player()) or not self.game.available_moves()
+        won = self.game.is_winner(self.current_player())
+        draw = not self.game.available_moves()
+        if won:
+            self.winner = self.current_player()
+        return won or draw
 
 if __name__ == '__main__':
     player1 = HumanPlayer('P1')
