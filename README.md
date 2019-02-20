@@ -2,7 +2,7 @@
 The goal of this project is to implement games (such as [TicTacToe](https://en.wikipedia.org/wiki/Tic-tac-toe)) in python with a focus on the following functionalities:
 1. GUI-based interaction allowing users to play the game
 2. automization of players allowing users to play against a machine player 
-3. training and evaluation of machine-learning-based players.
+3. training and evaluation of machine-learning-based players using reinforcement learning (RL).
 
 For more details regarding the current state, please setup project and [generate the doxygen documentation](#how-to-generate-the-documentation)
 
